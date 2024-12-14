@@ -1,0 +1,35 @@
+{
+  "name": "NetworkingKits",
+  "path": "tamplate path",
+  "description": "Handles networking logic and common utilities",
+  "param": [
+    "namePath"
+  ],
+  "addFile": [
+    {
+      "name": "Error.kt",
+      "path": "/{namePath}",
+      "fileTemplatePath": "Error.tm"
+    },
+    {
+      "name": "NetworkError.kt",
+      "path": "/{namePath}",
+      "fileTemplatePath": "NetworkError.tm"
+    },
+    {
+      "name": "Result.kt",
+      "path": "/{namePath}",
+      "fileTemplatePath": "Result.tm"
+    },
+    {
+      "name": "responseToResult.kt",
+      "path": "/{namePath}",
+      "fileTemplatePath": "responseToResult.tm"
+    },
+    {
+      "name": "safeCall.kt",
+      "path": "/{namePath}",
+      "fileTemplatePath": "safeCall.tm"
+    }
+  ]
+}
