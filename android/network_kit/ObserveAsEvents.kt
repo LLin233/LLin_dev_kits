@@ -9,18 +9,37 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
+
+/**
+ * sealed interface XYZEvent {
+ *     data class Error(
+ *         val error: NetworkError,
+ *     ) : XYZEvent
+ * }
+ *
+ * ObserveAsEvents(events = viewModel.events) { event ->
+ *     when (event) {
+ *         is XYZEvent.Error ->
+ *             Toast
+ *                 .makeText(
+ *                     context,
+ *                     event.error.toString(context),
+ *                     Toast.LENGTH_LONG,).show()
+ *     }
+ * }
+ */
+
 @Composable
 fun <T> ObserveAsEvents(
     events: Flow<T>,
     key1: Any? = null,
     key2: Any? = null,
-    onEvent: (T) -> Unit
+    onEvent: (T) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(lifecycleOwner.lifecycle, key1, key2) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            //this line would ensure no event will be lost
-            //also make sure event is fired from Dispatchers.Main
+            // deal with edge case that event may lost when config change like screen rotated
             withContext(Dispatchers.Main.immediate) {
                 events.collect(onEvent)
             }
